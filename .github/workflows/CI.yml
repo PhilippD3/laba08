@@ -1,0 +1,21 @@
+name: Actions
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs: 
+ build_Linux:
+
+  runs-on: ubuntu-latest
+
+  steps:
+  - uses: actions/checkout@v4
+
+  - name: Build the Docker
+    run: docker build -t logger .
+
+  - name: Put logs
+    run: docker run -v "$(pwd)/logs/:/home/logs/" logger
+    
